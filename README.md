@@ -8,6 +8,7 @@ vaadin.com](https://start.vaadin.com/).
 
 ## Running the Application
 The project is a standard Maven project. To run it from the command line, type `mvn` and open http://localhost:8080 in your browser.
+go to http://localhost:8080/visjs  to see visjs library (you can find the vis-control.js and data-set.js in frontend/js folder) and the java file exist at org.vaadin.example.visControl
 
 You can also import the project to your IDE of choice as you would with any
 Maven project. Read more on [how to set up a development environment for
