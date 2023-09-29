@@ -26,7 +26,7 @@ class VisControl extends PolymerElement {
   /* Add some spacing and styling to the form and its elements */
         #inputsForm {
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: white;
             border: 1px solid #ccc;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
             font-family: Arial, sans-serif;
@@ -57,7 +57,7 @@ class VisControl extends PolymerElement {
         }
 
         /* Style the submit button */
-        #submit-button {
+        #submit-button, #save-button , #load-xml-button , #load-button , #save-xml-button ,#save-in-json-file, #load-from-json-file, #xml-file-input{
             background-color: #007BFF;
             color: white;
             border: none;
@@ -67,7 +67,7 @@ class VisControl extends PolymerElement {
         }
 
         /* Style the submit button on hover */
-        #submit-button:hover {
+        #submit-button:hover, #save-button:hover, #load-xml-button:hover, #load-button:hover , #save-xml-button:hover, #save-in-json-file:hover, #load-from-json-file:hover, #xml-file-input:hover{
             background-color: #0056b3;
         }
 
@@ -77,10 +77,11 @@ class VisControl extends PolymerElement {
         }
 
         #tool-bar {
-            width: 30%;
+			width: 300px;
             height: 300px;
             font-family: calibri;
-            font-size: 14px;
+            font-size: 20px;
+			
         }
 
         #network-container {
@@ -100,7 +101,7 @@ class VisControl extends PolymerElement {
         .main-list,
         .sub-list {
             list-style-type: none;
-            background-color: #f9f9f9;
+            background-color: white;
             box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         }
 
@@ -112,7 +113,7 @@ class VisControl extends PolymerElement {
 
         .main-list li:hover,
         .sub-list li:hover {
-            background-color: #f1f1f1;
+            background-color: lightblue;
         }
 
         .dropdown {
@@ -686,6 +687,7 @@ Opacity
 					removeOption.textContent = "Remove";
 					removeOption.addEventListener("click", removeNode);
 
+
 					var linkOption = document.createElement("a");
 
 					linkOption.textContent = "Link";
@@ -764,6 +766,7 @@ Opacity
 
 					removeOption.textContent = "Remove";
 					removeOption.addEventListener("click", removeLink);
+					removeOption.style.color = "black";
 
 
 
@@ -1106,8 +1109,8 @@ Opacity
 
 		var submit = this.shadowRoot.querySelector("#submit-button");
 
-		submit.addEventListener("click", (event) =>{
-			 event.preventDefault();
+		submit.addEventListener("click", (event) => {
+			event.preventDefault();
 			var Alledges = edges.get();
 
 			var color = this.shadowRoot.querySelector("#edgeColor").value;
@@ -1439,7 +1442,7 @@ Opacity
 
 		return 'vis-control';
 	}
-	
+
 
 
 
