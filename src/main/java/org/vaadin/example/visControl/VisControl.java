@@ -1,5 +1,8 @@
 package org.vaadin.example.visControl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -11,11 +14,11 @@ import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.templatemodel.TemplateModel;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 
 @Tag("vis-control")
 @JsModule("./src/js/vis-control.js")
+
+@JsModule("./src/js/data-set.js")
 @Route("visjs")
 
 public class VisControl extends PolymerTemplate<TemplateModel> {
@@ -29,22 +32,54 @@ public class VisControl extends PolymerTemplate<TemplateModel> {
 
 	Footer footer;
 
+	@ClientCallable
+	public void receiveDataFromClient(String json) {
+	    System.out.println("server on");
+
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    JsonNode rootNode = objectMapper.valueToTree(1);
+	    JsonNode nodesArray = objectMapper.valueToTree(1);
+
+	    try {
+	        // Parse JSON string to a JsonNode
+	        rootNode = objectMapper.readTree(json);
+
+	         nodesArray = rootNode.get("nodes"); // Get the "nodes" array
+
+	        for (int i = 0; i < nodesArray.size(); i++) {
+	            JsonNode node = nodesArray.get(i); // Get the i-th node object
+	            int id = node.get("id").asInt();
+	            String label = node.get("label").asText();
+
+	            System.out.println("Id: " + id);
+	            System.out.println("Label: " + label);
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace(); // Handle the exception appropriately
+	    }
+
+	    System.out.println(nodesArray);
+	}
+
 	public VisControl() {
+
+//		System.out.println(UI.getCurrent().getPage().executeJs("return getData();"));
 
 		header = getNav();
 		footer = getFooter();
-		
-        // Create elements for the header and footer slots
-        Element headerElement = new Element("div");
-        headerElement.setAttribute("slot", "header");
-        headerElement.appendChild(header.getElement());
 
-        Element footerElement = new Element("div");
-        footerElement.setAttribute("slot", "footer");
-        footerElement.appendChild(footer.getElement());
+		// Create elements for the header and footer slots
+		Element headerElement = new Element("div");
+		headerElement.setAttribute("slot", "header");
+		headerElement.appendChild(header.getElement());
 
-        // Add the elements to your component
-        getElement().appendChild(headerElement, footerElement);
+		Element footerElement = new Element("div");
+		footerElement.setAttribute("slot", "footer");
+		footerElement.appendChild(footer.getElement());
+
+		// Add the elements to your component
+		getElement().appendChild(headerElement, footerElement);
 
 	}
 
@@ -67,7 +102,6 @@ public class VisControl extends PolymerTemplate<TemplateModel> {
 						+ "                transition: .5s;'>Login</a>" + "</li>"
 
 						+ "</ul>");
-
 		return ul;
 
 	}
@@ -105,5 +139,6 @@ public class VisControl extends PolymerTemplate<TemplateModel> {
 		return footer;
 
 	}
+
 
 }

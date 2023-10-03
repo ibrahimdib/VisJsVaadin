@@ -6,7 +6,7 @@ const nodes = new DataSet([]);
 // Create a new DataSet for edges
 const edges = new DataSet([]);
 
-var startNodeId0 = null; 
+var startNodeId0 = null;
 
 
 var data = {
@@ -15,9 +15,9 @@ var data = {
 };
 
 var nodeIds = {
-	
-	startNodeId0 : startNodeId0,
-	
+
+	startNodeId0: startNodeId0,
+
 }
 
 var options = {
@@ -41,4 +41,18 @@ var options = {
 
 
 
-export { data, options, nodeIds};
+
+window.getData = function() {
+
+
+	console.log(data)
+
+
+}
+
+
+
+
+
+
+export { data, options, nodeIds };

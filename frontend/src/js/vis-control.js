@@ -3,6 +3,7 @@ import './header.js';
 import './footer.js';
 import { data, options, nodeIds } from './data-set.js';
 import { Network } from 'vis-network/peer'; // Import Network from vis-network/peer
+import { DataSet } from 'vis-data/peer';
 
 
 
@@ -299,7 +300,7 @@ Opacity
 
 
 
-
+<button id="handler" on-click="sendDataToServer"> to server </button>
 	<slot name="footer"></slot>
 </body> `;
 	}
@@ -333,13 +334,21 @@ Opacity
 		console.log(this.linksHidden);
 	}
 
+
+
+
+
+
 	connectedCallback() {
 		super.connectedCallback();
+
+
+
 		const container = this.shadowRoot.querySelector('#network-container');
 
 
-		const network = new Network(container, data, options)
 
+		const network = new Network(container, data, options);
 
 		var x = 100, y = 100;
 		var edges = data.edges;
@@ -412,6 +421,8 @@ Opacity
 		});
 
 
+
+
 		//------------------------------------------------------------------------------------------------------------
 		// Add event listeners for link buttons
 		var link = this.shadowRoot.querySelector("#add-link1");
@@ -419,6 +430,10 @@ Opacity
 
 		var startNodeId = null; // To store the selected starting node ID
 		var endNodeId = null;   // To store the selected ending node ID
+
+
+
+
 		link.addEventListener("click", function() {
 
 
@@ -1428,13 +1443,12 @@ Opacity
 
 
 
-		console.log(nodes.get(), edges.get(), options, network);
+
+
+
+
+
 	}
-
-
-
-
-
 
 
 
@@ -1443,7 +1457,17 @@ Opacity
 		return 'vis-control';
 	}
 
+	sendDataToServer() {
+		const serializedData = {
+			nodes: data.nodes.get(),
+			edges: data.edges.get(),
+		};
 
+		const jsonData = JSON.stringify(serializedData);
+
+		console.log(jsonData);
+		this.$server.receiveDataFromClient(jsonData);
+	}
 
 
 }
